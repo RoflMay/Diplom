@@ -1,0 +1,730 @@
+/* Основные стили */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+body.modal-open {
+  padding-right: 0 !important;
+  overflow-y: scroll !important;
+}
+
+
+.wrapper {
+  flex: 1;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+body {
+  flex: 1;
+  min-height: 100vh;
+  overflow-y: scroll;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+
+/* Навигация */
+
+.navbar {
+  background-color: #1c1f23;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* позволяет контенту переноситься */
+}
+
+.navbar .container-fluid {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-wrap: wrap; /* разрешаем перенос строк */
+  gap: 15px;
+  padding-left: 0;
+  list-style: none;
+  justify-content: center; /* выравниваем по центру при переносе */
+  text-align: center;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  white-space: normal !important; /* разрешаем перенос текста */
+  word-break: break-word;
+  flex-shrink: 1;
+  min-width: 80px; /* чтобы не было слишком узко */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #93b321;
+}
+
+.navbar .navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-right: 20px;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .navbar-nav {
+    flex-direction: column; /* Переводим меню на вертикальную ось */
+    gap: 10px; /* Уменьшаем расстояние между пунктами */
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 8px;
+  }
+}
+
+/* Убираем полоски на мобильных устройствах */
+.navbar-nav {
+  list-style: none;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+
+/* Для логотипа или текста */
+.navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-right: 20px; /* Отступ справа */
+}
+
+
+/* Главная секция */
+.hero {
+  min-height: 100vh;
+  background: url("../img/banner.jpg") center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 4px #000;
+  padding: 60px 20px 20px;
+  margin: 0;
+  background-attachment: fixed;
+}
+
+/* Стиль футера */
+.footer {
+  
+  background-color: #1c1f23;  /* Темный фон */
+  color: #fff;  /* Белый текст */
+  padding: 20px 0;  /* Уменьшаем отступы сверху и снизу */
+  font-size: 1rem;  /* Увеличиваем размер шрифта */
+  text-align: center; /* Центрируем текст */
+   flex-shrink: 0;
+}
+
+.footer a {
+  color: #93b321;  /* Светло-зеленый цвет для ссылок */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+.projects-page {
+  min-height: 100%; /* Это делает основной контент достаточно высоким, чтобы футер не перекрывал его */
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-page .footer {
+  margin-top: auto; /* Это заставит футер всегда быть внизу */
+}
+
+
+.footer a:hover {
+  text-decoration: underline; /* Добавляем подчеркивание при наведении */
+}
+
+/* Структурируем футер в виде колонок */
+.footer .footer-container {
+  display: flex;
+  justify-content: space-between; /* Распределяем элементы */
+  max-width: 1200px;  /* Ограничиваем максимальную ширину */
+  margin: 0 auto;  /* Центрируем футер */
+  flex-wrap: wrap; /* Добавляем перенос элементов при малой ширине экрана */
+}
+
+.footer .footer-container div {
+  flex: 1;  /* Задаем равные размеры для всех колонок */
+  padding: 10px;  /* Добавляем отступы для колонок */
+  min-width: 150px;  /* Устанавливаем минимальную ширину колонок */
+}
+
+.footer .footer-container div h5 {
+  margin-bottom: 10px;  /* Отступ снизу для заголовков */
+  font-size: 1.2rem;  /* Увеличиваем размер заголовка */
+}
+
+.footer .footer-container div ul {
+  list-style: none;  /* Убираем стандартные маркеры списка */
+  padding: 0;  /* Убираем отступы */
+}
+
+.footer .footer-container div ul li {
+  margin: 5px 0;  /* Отступы между элементами списка */
+}
+
+.footer .footer-container div ul li a {
+  color: #fff;  /* Белые ссылки */
+  font-size: 1rem;  /* Увеличиваем размер текста */
+}
+
+.footer .footer-container div ul li a:hover {
+  color: #93b321;  /* Светло-зеленый цвет при наведении */
+}
+
+/* Формы ошибок */
+input.is-invalid {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
+}
+
+/* Карточки */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-body {
+  background-color: #fff; /* Белый фон карточки */
+  color: #333; /* Темный цвет текста */
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  transition: background-color 0.3s ease; /* Плавный переход фона */
+}
+
+.card:hover .card-body {
+  background-color: #f8f9fa; /* Слегка серый фон при наведении */
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+
+.card-body a {
+  color: #fff; /* Белый цвет текста */
+  background-color: #007bff; /* Синий фон */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card-body a:hover {
+  background-color: #0056b3; /* Тёмно-синий фон при наведении */
+  color: #fff; /* Белый текст при наведении */
+}
+
+
+/* Анимация карточек и кнопок */
+.card:hover .card-img-top {
+  transform: scale(1.1);
+}
+
+.card-body:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Анимация для появления блоков */
+.services-section {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.services-section.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.contact-section {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.contact-section.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.project-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 1s ease, transform 2s ease; 
+}
+
+.service-card.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Модальные окна */
+.modal-content {
+  border-radius: 15px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-footer button {
+  border-radius: 10px;
+}
+
+/* БЛОКИ О НАС */
+/* Скрываем блоки при загрузке */
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Блоки, которые не видны изначально */
+.invisible {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+/* ===== Адаптивность ===== */
+
+/* Мобильные устройства (ширина < 768px) */
+@media (max-width: 768px) {
+  .navbar .navbar-brand {
+    font-size: 1.2rem;
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 1.1rem;
+    padding: 8px 0;
+  }
+
+  .hero .display-4 {
+    font-size: 1.6rem;
+  }
+
+  .hero .lead {
+    font-size: 1rem;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .contact-section .col-md-6 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .footer .row > div {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .modal-dialog {
+    margin: 1rem;
+  }
+
+  .accessibility-footer {
+    font-size: 20px;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+/* Очень маленькие устройства (ширина < 576px) */
+@media (max-width: 576px) {
+  body {
+    overflow-x: hidden !important;
+  }
+
+  .navbar .container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 10px 15px;
+  }
+
+  .navbar-nav {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link,
+  .navbar-nav .nav-item {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    flex-shrink: 1;
+  }
+
+  .navbar-nav img.eye-icon {
+    width: 26px;
+    margin-top: 2px;
+  }
+
+  .hero {
+    padding: 20px 10px;
+  }
+
+  .hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero .lead {
+    font-size: 1rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .modal-content {
+    padding: 10px;
+  }
+
+  .footer .row {
+    flex-direction: column;
+  }
+
+  .footer .col-md-3,
+  .footer .col-md-4,
+  .footer .col-md-2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+/* Исправление заголовка в шапке на мобильных */
+@media (max-width: 576px) {
+.navbar-brand {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.9rem !important;
+  white-space: normal !important;
+  line-height: 1.2;
+  max-width: 100%;
+  word-break: break-word;
+  width: 100%;
+}
+}
+@media (max-width: 576px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    min-width: 500px; /* чтобы таблица не сжималась слишком сильно */
+  }
+
+  td, th {
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+}
+
+/* Размер шрифта */
+.font-small { font-size: 14px; }
+.font-medium { font-size: 18px; }
+.font-large { font-size: 22px; }
+
+/* Цветовые схемы */
+.scheme-default { background-color: white; color: black; }
+.scheme-high-contrast { background-color: black; color: yellow; }
+.scheme-black-white { background-color: black; color: white; }
+
+/* Кернинг */
+.kerning-normal { letter-spacing: normal; }
+.kerning-wide { letter-spacing: 2px; }
+
+/* Панель управления */
+#accessibility-panel button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+/* ===== Темы сайта для слабовидящих ===== */
+
+/* Обычная — белый фон, чёрный текст */
+.theme-white {
+  background-color: white !important;
+  color: black !important;
+}
+
+.theme-white nav,
+.theme-white footer,
+.theme-white .card,
+.theme-white .modal-content,
+.theme-white body,
+.theme-white section,
+.theme-white .list-group-item,
+.theme-white table,
+.theme-white th,
+.theme-white td,
+.theme-white .footer,
+.theme-white .navbar,
+.theme-white .navbar *,
+.theme-white .service-card,
+.theme-white .form-control,
+.theme-white .btn,
+.theme-white .form-container,
+.theme-white .hero,
+.theme-white .banner {
+  background-color: white !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+.theme-white .footer a,
+.theme-white footer a,
+.theme-white .card a,
+.theme-white a {
+  color: black !important;
+}
+
+.theme-white #accessibility-panel,
+.theme-white #accessibility-panel * {
+  background-color: #fff !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+/* Инвертированная — чёрный фон, белый текст */
+.theme-black {
+  background-color: black !important;
+  color: white !important;
+}
+
+.theme-black nav,
+.theme-black footer,
+.theme-black .card,
+.theme-black .modal-content,
+.theme-black body,
+.theme-black section,
+.theme-black .list-group-item,
+.theme-black table,
+.theme-black th,
+.theme-black td,
+.theme-black .footer,
+.theme-black .navbar,
+.theme-black .navbar *,
+.theme-black .service-card,
+.theme-black .form-control,
+.theme-black .btn,
+.theme-black .form-container,
+.theme-black .hero,
+.theme-black .banner {
+  background-color: black !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+.theme-black .footer a,
+.theme-black footer a,
+.theme-black .card a,
+.theme-black a {
+  color: white !important;
+}
+
+.theme-black #accessibility-panel,
+.theme-black #accessibility-panel * {
+  background-color: #000 !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+.theme-black #accessibility-panel button {
+  background-color: #111 !important;
+  color: white !important;
+  border: 1px solid white !important;
+}
+
+/* фиксируем цвет иконок "Ц" в кнопках — независимо от темы */
+#accessibility-panel button[onclick*="setColorScheme"] {
+  font-weight: bold !important;
+}
+
+#accessibility-panel button[onclick*="setColorScheme"][id="blackThemeBtn"] {
+  background-color: black !important;
+  color: white !important;
+}
+
+#accessibility-panel button[onclick*="setColorScheme"][id="whiteThemeBtn"] {
+  background-color: white !important;
+  color: black !important;
+}
+
+#accessibility-panel button[onclick*="setColorScheme"][id="blueThemeBtn"] {
+  background-color: #a8d8ff !important;
+  color: black !important;
+}
+
+/* Синяя тема — синий фон, чёрный текст */
+.theme-blue {
+  background-color: #a8d8ff !important;
+  color: black !important;
+}
+
+.theme-blue nav,
+.theme-blue footer,
+.theme-blue .card,
+.theme-blue .modal-content,
+.theme-blue body,
+.theme-blue section,
+.theme-blue .list-group-item,
+.theme-blue table,
+.theme-blue th,
+.theme-blue td,
+.theme-blue .footer,
+.theme-blue .navbar,
+.theme-blue .navbar *,
+.theme-blue .service-card,
+.theme-blue .form-control,
+.theme-blue .btn,
+.theme-blue .form-container,
+.theme-blue .hero,
+.theme-blue .banner {
+  background-color: #a8d8ff !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+.theme-blue .footer a,
+.theme-blue footer a,
+.theme-blue .card a,
+.theme-blue a {
+  color: black !important;
+}
+
+.theme-blue #accessibility-panel,
+.theme-blue #accessibility-panel * {
+  background-color: #a8d8ff !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+/* Размеры шрифта */
+.font-small {
+  font-size: 14px !important;
+}
+.font-medium {
+  font-size: 18px !important;
+}
+.font-large {
+  font-size: 22px !important;
+}
+
+/* Кернинг */
+.kerning-normal {
+  letter-spacing: normal !important;
+}
+.kerning-wide {
+  letter-spacing: 2px !important;
+}
+
+
+
+
+
+
+

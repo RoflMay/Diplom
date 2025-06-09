@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Строительная организация “Чериковская ПМК-280”</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    .footer {
+      background-color: #111;
+      color: white;
+      padding: 40px 20px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-container div {
+      flex: 1 1 200px;
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer p:last-child {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="accessibility-panel" style="display: none; background: #fff; padding: 10px; border-bottom: 2px solid #ccc; text-align: center; font-family: Arial, sans-serif;">
+  <strong>ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ:</strong>
+  <div style="margin-top: 10px;">
+    Размер шрифта:
+    <button onclick="setFontSize('small')">A-</button>
+    <button onclick="setFontSize('medium')">A</button>
+    <button onclick="setFontSize('large')">A+</button>
+
+    Цвета:
+    <button onclick="setColorScheme('white')" id="whiteThemeBtn" title="Обычный" style="border: 2px solid black; background: white; color: black; font-weight: bold;">Ц</button>
+    <button onclick="setColorScheme('black')" id="blackThemeBtn" title="Контрастный" style="border: 2px solid black; background: black; color: white; font-weight: bold;">Ц</button>
+    <button onclick="setColorScheme('blue')" id="blueThemeBtn" title="Синий фон" style="border: 2px solid black; background: #a8d8ff; color: black; font-weight: bold;">Ц</button>
+
+    Кернинг:
+    <button onclick="setLetterSpacing('normal')">Стандарт</button>
+    <button onclick="setLetterSpacing('wide')">Широкий</button>
+
+    <button onclick="disableAccessibility()">Обычная версия</button>
+  </div>
+</div>
+
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Строительная организация “Чериковская ПМК-280”</a>
+    <div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
+        <a class="nav-link" href="{{ url_for('index') }}">Главная</a>
+        <a class="nav-link" href="{{ url_for('about') }}">О компании</a>
+        <a class="nav-link" href="{{ url_for('services') }}">Услуги</a>
+        <a class="nav-link" href="{{ url_for('projects') }}">Проекты</a>
+        <a class="nav-link" href="{{ url_for('contact') }}">Контакты</a>
+        <li class="nav-item">
+        <img id="toggleAccessibility"
+        src="{{ url_for('static', filename='icons/eye.png') }}"
+        alt="Версия для слабовидящих"
+        title="Версия для слабовидящих"
+        style="cursor:pointer; width: 33px; margin-top: 4px;">
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-left mb-4">Наши проекты</h2>
+
+    <!-- Новый адаптивный фильтр и поиск -->
+    <div class="row align-items-center mb-4 gy-2">
+      <!-- Категория -->
+      <div class="col-md-6">
+        <form action="{{ url_for('projects') }}" method="GET" class="d-flex flex-wrap align-items-center gap-2">
+          <label for="category" class="form-label mb-0">Категория:</label>
+          <select id="category" name="category" class="form-select w-auto">
+            <option value="">Все</option>
+            <option value="residential" {% if request.args.get('category') == 'residential' %}selected{% endif %}>Жилые</option>
+            <option value="commercial" {% if request.args.get('category') == 'commercial' %}selected{% endif %}>Коммерческие</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Применить</button>
+        </form>
+      </div>
+
+      <!-- Поиск -->
+      <div class="col-md-6 text-md-end">
+        <label for="searchInput" class="form-label mb-0 me-2">Поиск:</label>
+        <input type="text" id="searchInput" name="search" class="form-control d-inline-block w-auto"
+               value="{{ request.args.get('search', '') }}"
+               placeholder="Поиск по названию" onkeyup="filterProjects()"
+               style="max-width: 250px;">
+      </div>
+    </div>
+
+    <!-- Проекты -->
+    <div class="row" id="projectsContainer">
+      {% for project in projects %}
+        <div class="col-md-4 mb-4 project-card" data-title="{{ project.title }}">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ url_for('static', filename='img/' + project.image_url) }}" class="card-img-top" alt="{{ project.title }}" style="height: 250px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ project.title }}</h5>
+              <p class="card-text">{{ project.description[:100] }}...</p>
+              <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal{{ project.id }}">
+                <i class="fa fa-eye"></i> Подробнее
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="projectModal{{ project.id }}" tabindex="-1" aria-labelledby="projectModalLabel{{ project.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="projectModalLabel{{ project.id }}">{{ project.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <img src="{{ url_for('static', filename='img/' + project.image_url) }}" class="img-fluid rounded mb-3" alt="{{ project.title }}">
+                <p>{{ project.description }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="footer-container">
+    <div>
+      <h5>Строительная организация</h5>
+      <p>“ПМК-280” — ваш надёжный партнёр в сфере строительства и ремонта</p>
+    </div>
+    <div>
+      <h5>Навигация</h5>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Главная</a></li>
+        <li><a href="{{ url_for('about') }}">О компании</a></li>
+        <li><a href="{{ url_for('services') }}">Услуги</a></li>
+        <li><a href="{{ url_for('projects') }}">Проекты</a></li>
+        <li><a href="{{ url_for('contact') }}">Контакты</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Контакты</h5>
+      <ul>
+        <li>Адрес: г. Чериков, ул. Ленинская, д. 1</li>
+        <li>Телефон: +375 (22) 433 24 86</li>
+        <li>Email: pmk280@mail.ru</li>
+      </ul>
+    </div>
+  </div>
+  <p>&copy; 2025 Строительная организация “Чериковская ПМК-280”. Все права защищены.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/accessibility.js') }}"></script>
+
+
+<script>
+  function filterProjects() {
+    const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+    const projects = document.querySelectorAll('.project-card');
+    projects.forEach(function(project) {
+      const title = project.getAttribute('data-title').toLowerCase();
+      project.style.display = title.includes(searchQuery) ? '' : 'none';
+    });
+  }
+</script>
+
+<script>
+  function revealProjectsOnScroll() {
+    const cards = document.querySelectorAll('.project-card');
+    const triggerBottom = window.innerHeight * 0.9;
+
+    cards.forEach((card, index) => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < triggerBottom && !card.classList.contains('visible')) {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 150); // задержка для поочерёдной анимации
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealProjectsOnScroll);
+  window.addEventListener('DOMContentLoaded', revealProjectsOnScroll);
+  window.addEventListener('load', revealProjectsOnScroll);
+</script>
+
+</body>
+</html>

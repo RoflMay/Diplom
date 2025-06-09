@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Строительная организация “Чериковская ПМК-280”</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Свои стили -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+<body>
+  
+<div id="accessibility-panel" style="display: none; background: #fff; padding: 10px; border-bottom: 2px solid #ccc; text-align: center; font-family: Arial, sans-serif;">
+  <strong>ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ:</strong>
+  <div style="margin-top: 10px;">
+    Размер шрифта:
+    <button onclick="setFontSize('small')">A-</button>
+    <button onclick="setFontSize('medium')">A</button>
+    <button onclick="setFontSize('large')">A+</button>
+
+    Цвета:
+    <button onclick="setColorScheme('white')" id="whiteThemeBtn" title="Обычный" style="border: 2px solid black; background: white; color: black; font-weight: bold;">Ц</button>
+    <button onclick="setColorScheme('black')" id="blackThemeBtn" title="Контрастный" style="border: 2px solid black; background: black; color: white; font-weight: bold;">Ц</button>
+    <button onclick="setColorScheme('blue')" id="blueThemeBtn" title="Синий фон" style="border: 2px solid black; background: #a8d8ff; color: black; font-weight: bold;">Ц</button>
+
+    Кернинг:
+    <button onclick="setLetterSpacing('normal')">Стандарт</button>
+    <button onclick="setLetterSpacing('wide')">Широкий</button>
+
+    <button onclick="disableAccessibility()">Обычная версия</button>
+  </div>
+</div>
+
+
+<!-- Навигация -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Строительная организация “Чериковская ПМК-280”</a>
+    <div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
+        <a class="nav-link" href="{{ url_for('index') }}">Главная</a>
+        <a class="nav-link" href="{{ url_for('about') }}">О компании</a>
+        <a class="nav-link" href="{{ url_for('services') }}">Услуги</a>
+        <a class="nav-link" href="{{ url_for('projects') }}">Проекты</a>
+        <a class="nav-link" href="{{ url_for('contact') }}">Контакты</a>
+        <li class="nav-item">
+        <img id="toggleAccessibility"
+        src="{{ url_for('static', filename='icons/eye.png') }}"
+        alt="Версия для слабовидящих"
+        title="Версия для слабовидящих"
+        style="cursor:pointer; width: 33px; margin-top: 4px;">
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Главный экран -->
+<section class="hero text-white d-flex align-items-center">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">СТРОИТЕЛЬНАЯ ОРГАНИЗАЦИЯ С МНОГОЛЕТНИМ ОПЫТОМ</h1>
+    <p class="lead text-light">КАЧЕСТВЕННОЕ ВЫПОЛНЕНИЕ РАБОТ</p>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#contactModal">Связаться</button>
+      <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#consultModal">Консультация</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Модальное окно "Связаться" -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Связаться с нами</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <strong>Номер телефона:</strong><br>
+        +375 22 433 24 86<br><br>
+        <strong>Режим работы:</strong><br>
+        пн–пт: 8.00–17.00<br>
+        сб, вс: выходной
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Модальное окно "Консультация" -->
+<div class="modal fade" id="consultModal" tabindex="-1" aria-labelledby="consultModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="modalForm" action="/submit_consultation" method="POST" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title" id="consultModalLabel">Нужна консультация?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nameInput" class="form-label">Имя:</label>
+            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Введите ваше имя">
+          </div>
+          <div class="mb-3">
+            <label for="phoneInput" class="form-label">Телефон:</label>
+            <input type="tel" class="form-control" id="phoneInput" name="phone" placeholder="Введите номер телефона">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success w-100">Записаться на консультацию</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Услуги -->
+<section class="py-5 bg-light services-section">
+  <div class="container">
+    <h2 class="text-center mb-4">Наши услуги</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Строительство домов</h5>
+            <p class="card-text">Мы возводим жилые и коммерческие здания под ключ с соблюдением сроков и стандартов качества.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Ремонт и отделка</h5>
+            <p class="card-text">Выполняем ремонт квартир, офисов и частных домов с индивидуальным подходом и современными материалами.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Проектирование</h5>
+            <p class="card-text">Разрабатываем архитектурные и инженерные проекты с учётом всех требований заказчика.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Контакты и форма -->
+<section class="contact-section py-5">
+  <div class="container">
+    <div class="row align-items-start">
+      <!-- Левая часть: Контакты -->
+      <div class="col-md-6 mb-4">
+        <h5 class="text-muted">Контакты</h5>
+        <h2 class="fw-bold">С нами можно связаться:</h2>
+        <p class="mt-4">+375 22 433 24 86</p>
+        <p>pmk280@mail.ru</p>
+        <p>Могилевская область, г. Чериков, ул. Ленинская, д. 1</p>
+      </div>
+
+      <!-- Правая часть: Форма -->
+      <div class="col-md-6">
+        <div class="p-4 rounded" style="background-color: #93b321; box-shadow: 0 0 25px rgba(0,0,0,0.1);">
+          <form id="footerForm" action="/submit_consultation" method="POST" novalidate>
+            <div class="mb-3">
+              <label for="footerName" class="form-label text-white">Имя:</label>
+              <input type="text" class="form-control" id="footerName" name="name" placeholder="Введите ваше имя">
+            </div>
+            <div class="mb-3">
+              <label for="footerPhone" class="form-label text-white">Телефон:</label>
+              <input type="tel" class="form-control" id="footerPhone" name="phone" placeholder="Введите номер телефона">
+            </div>
+            <button type="submit" class="btn btn-outline-light w-100">Заказать консультацию</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Всплывающее уведомление -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+  <div id="successAlert" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Заявка успешно отправлена!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Футер -->
+<div class="footer bg-dark text-light py-4">
+  <div class="container">
+    <div class="row">
+      <!-- Первый столбец -->
+      <div class="col-md-3">
+        <h5>Строительная организация</h5>
+        <p>“ПМК-280” — ваш надежный партнёр в сфере строительства и ремонта</p>
+      </div>
+      <!-- Второй столбец -->
+      <div class="col-md-2">
+        <h5>Навигация</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ url_for('index') }}" class="text-light">Главная</a></li>
+          <li><a href="{{ url_for('about') }}" class="text-light">О компании</a></li>
+          <li><a href="{{ url_for('services') }}" class="text-light">Услуги</a></li>
+          <li><a href="{{ url_for('projects') }}" class="text-light">Проекты</a></li>
+          <li><a href="{{ url_for('contact') }}" class="text-light">Контакты</a></li>
+        </ul>
+      </div>
+      <!-- Третий столбец -->
+      <div class="col-md-3">
+        <h5>Контакты</h5>
+        <ul class="list-unstyled">
+          <li>Адрес: г. Чериков, ул. Ленинская, д. 1</li>
+          <li>Телефон: +375 (22) 433 24 86</li>
+          <li>Email: pmk280@mail.ru</li>
+        </ul>
+      </div>
+      <!-- Четвёртый столбец: логин -->
+      <div class="col-md-4 text-end">
+        <h5>Вход в админ-панель</h5>
+        <form action="{{ url_for('login') }}" method="post">
+          <input type="text" name="username" placeholder="Логин" class="form-control mb-2" required>
+          <input type="password" name="password" placeholder="Пароль" class="form-control mb-2" required>
+          <button type="submit" class="btn btn-light btn-sm">Войти</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="text-center mt-3">
+      <p class="mb-0">&copy; 2025 Строительная организация “Чериковская ПМК-280”. Все права защищены.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Скрипты Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+<script src="{{ url_for('static', filename='js/accessibility.js') }}"></script>
+
+
+<script>
+  // Функция для добавления класса "visible" на блок с услугами, когда он появляется на экране
+  function revealServices() {
+    const servicesSection = document.querySelector('.services-section');
+    const servicesPosition = servicesSection.getBoundingClientRect().top;
+    const screenPosition = window.innerHeight / 1.2; // Когда блок почти полностью виден
+
+    if (servicesPosition < screenPosition) {
+      servicesSection.classList.add('visible');
+    }
+  }
+
+  // Следим за прокруткой страницы
+  window.addEventListener('scroll', revealServices);
+
+  // Также вызываем функцию сразу, чтобы проверить, если блок уже на экране при загрузке
+  revealServices();
+</script>
+
+
+
+<script>
+  // Функция для добавления класса "visible" на блок с контактами, когда он появляется на экране
+  function revealContact() {
+    const contactSection = document.querySelector('.contact-section');
+    const contactPosition = contactSection.getBoundingClientRect().top;
+    const screenPosition = window.innerHeight / 1.2; // Когда блок почти полностью виден
+
+    if (contactPosition < screenPosition) {
+      contactSection.classList.add('visible');
+    }
+  }
+
+  // Следим за прокруткой страницы
+  window.addEventListener('scroll', revealContact);
+
+  // Также вызываем функцию сразу, чтобы проверить, если блок уже на экране при загрузке
+  revealContact();
+</script>
+
+
+<script>
+  // Проверка имени: только кириллица
+  function validateName(name) {
+    const regex = /^[А-Яа-яЁё\s\-]+$/;
+    return regex.test(name.trim());
+  }
+
+  // Проверка телефона: +375 (можно с пробелами), только цифры и пробелы
+  function validatePhone(phone) {
+    const cleaned = phone.replace(/\s+/g, '');
+    const regex = /^\+375(25|29|33|44)\d{7}$/;
+    return regex.test(cleaned);
+  }
+
+  function showError(input, message) {
+    input.classList.add('is-invalid');
+    let feedback = input.nextElementSibling;
+    if (!feedback || !feedback.classList.contains('invalid-feedback')) {
+      feedback = document.createElement('div');
+      feedback.className = 'invalid-feedback';
+      input.parentNode.appendChild(feedback);
+    }
+    feedback.innerText = message;
+  }
+
+  function clearError(input) {
+    input.classList.remove('is-invalid');
+    const feedback = input.nextElementSibling;
+    if (feedback && feedback.classList.contains('invalid-feedback')) {
+      feedback.remove();
+    }
+  }
+
+ function setupFormValidation(formId, nameInputId, phoneInputId, modalId = null) {
+    const form = document.getElementById(formId);
+    const nameInput = document.getElementById(nameInputId);
+    const phoneInput = document.getElementById(phoneInputId);
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // всегда сначала блокируем отправку
+
+        let valid = true;
+        clearError(nameInput);
+        clearError(phoneInput);
+
+        if (!validateName(nameInput.value)) {
+          showError(nameInput, 'Имя должно содержать только русские буквы.');
+          valid = false;
+        }
+
+        if (!validatePhone(phoneInput.value)) {
+          showError(phoneInput, 'Введите корректный номер: +375 29 ХХХ ХХ ХХ');
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        // Скрываем модалку, если она была
+        if (modalId) {
+          const modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+          if (modal) modal.hide();
+        }
+
+        // Показываем сообщение об успехе
+        setTimeout(() => {
+          const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+          successModal.show();
+        }, 300);
+
+        form.reset();
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    setupFormValidation('modalForm', 'nameInput', 'phoneInput', 'consultModal');
+    setupFormValidation('footerForm', 'footerName', 'footerPhone');
+  });
+</script>
+
+<script>
+  // Привязка к вашим формам
+  document.addEventListener('DOMContentLoaded', function () {
+    setupFormValidation('modalForm', 'nameInput', 'phoneInput', 'consultModal');
+    setupFormValidation('footerForm', 'footerName', 'footerPhone');
+  });
+</script>
+
+
+<!-- Уведомление об успешной отправке формы  -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Спасибо!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        Ваша заявка принята. Мы свяжемся с вами в ближайшее время.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupFormValidation(formId, nameInputId, phoneInputId) {
+    const form = document.getElementById(formId);
+    const nameInput = document.getElementById(nameInputId);
+    const phoneInput = document.getElementById(phoneInputId);
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        let valid = true;
+
+        clearError(nameInput);
+        clearError(phoneInput);
+
+        if (!validateName(nameInput.value)) {
+          showError(nameInput, 'Имя должно содержать только русские буквы.');
+          valid = false;
+        }
+
+        if (!validatePhone(phoneInput.value)) {
+          showError(phoneInput, 'Введите корректный номер: +375 29 ХХХ ХХ ХХ');
+          valid = false;
+        }
+
+        if (!valid) {
+          e.preventDefault(); // блокирует только если есть ошибки
+        }
+        // Если форма валидна — отправка произойдёт, модалка будет показана на следующем шаге
+      });
+    }
+  }
+
+  // Показываем "Спасибо", если был success=1 в URL
+  document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("success") === "1") {
+      const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+      successModal.show();
+
+      // Убираем параметр из адреса, чтобы не показывать снова при обновлении
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  });
+</script>
+
+</body>
+</html>
