@@ -13,19 +13,15 @@ from flask_babel import Babel
 
 app = Flask(__name__)
 
-# Настройки для SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'
 
-# Локализация на русский язык
 app.config['BABEL_DEFAULT_LOCALE'] = 'ru'
 babel = Babel(app)
 
-# Инициализация базы данных
 db = SQLAlchemy(app)
 
-# Модель для проектов
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -36,7 +32,7 @@ class Project(db.Model):
     def __repr__(self):
         return f"<Project {self.title}>"
 
-# Модель для консультаций
+
 class Consultation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -45,7 +41,7 @@ class Consultation(db.Model):
     def __repr__(self):
         return f"<Consultation {self.name}, {self.phone}>"
 
-# Модель для услуг
+
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -57,7 +53,7 @@ class Service(db.Model):
     def __repr__(self):
         return f"<Service {self.title}>"
 
-# Формы для админ панели
+
 class ProjectForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired()])
     description = TextAreaField('Описание', validators=[DataRequired()])
@@ -85,14 +81,13 @@ class ServiceForm(FlaskForm):
     page_name = StringField('Название страницы (например: works)', validators=[DataRequired()])
     is_active = BooleanField('Активна', widget=PrettyCheckbox())
 
-# Кастомный индекс для админки
+
 class MyAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        return super().index()
+        return redirect('/admin/project/')
 
 
-# Кастомные представления моделей
 class ProjectModelView(ModelView):
     form = ProjectForm
     form_columns = ['title', 'description', 'image_url', 'category']
@@ -185,20 +180,20 @@ class ConsultationModelView(ModelView):
         'phone': 'Телефон'
     }
 
-# Настройка админ панели
-admin = Admin(app, name='Админ панель', index_view=MyAdminIndexView(), template_mode='bootstrap3', url='/superpanel')
+
+admin = Admin(app, name='Админ панель', index_view=MyAdminIndexView(), template_mode='bootstrap3', url='/admin')
 admin.add_view(ProjectModelView(Project, db.session, name='Проекты'))
 admin.add_view(ConsultationModelView(Consultation, db.session, name='Консультации'))
 admin.add_view(ServiceModelView(Service, db.session, name='Услуги'))
 
-# Роуты
+
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
     password = request.form["password"]
 
     if username == "admin" and password == "1234":
-        return redirect("/superpanel")
+        return redirect("/admin")
     return redirect(request.referrer or "/")
 
 @app.route('/')
