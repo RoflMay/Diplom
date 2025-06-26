@@ -197,7 +197,7 @@ def login():
     password = request.form["password"]
 
     if username == "admin" and password == "1234":
-        return redirect("/admin")
+        return redirect("/superpanel")
     return redirect(request.referrer or "/")
 
 @app.route('/')
