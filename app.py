@@ -185,7 +185,7 @@ class ConsultationModelView(ModelView):
     }
 
 # Настройка админ панели
-admin = Admin(app, name='Админ панель', index_view=MyAdminIndexView(), template_mode='bootstrap3', url='/admin')
+admin = Admin(app, name='Админ панель', index_view=MyAdminIndexView(), template_mode='bootstrap3', url='/superpanel')
 admin.add_view(ProjectModelView(Project, db.session, name='Проекты'))
 admin.add_view(ConsultationModelView(Consultation, db.session, name='Консультации'))
 admin.add_view(ServiceModelView(Service, db.session, name='Услуги'))
