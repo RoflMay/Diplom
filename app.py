@@ -89,7 +89,7 @@ class ServiceForm(FlaskForm):
 class MyAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        return redirect('/admin/project/')
+        return redirect('/superpanel/project/')
 
 # Кастомные представления моделей
 class ProjectModelView(ModelView):
